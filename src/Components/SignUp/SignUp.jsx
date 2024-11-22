@@ -41,7 +41,7 @@ const SignUp = () => {
             const user = result.user;
 
             // Store Client details in Firestore
-            await setDoc(doc(fireStoreDb, "Admins", userInput.employeeId), {
+            await setDoc(doc(fireStoreDb, "Users", userInput.employeeId), {
               firstname : userInput.firstname,
               lastname : userInput.lastname,
               email: user.email,

@@ -23,7 +23,7 @@ const{employeeId ,setEmployeeId} = useMyContextData ;
      try{
 
       //gettting the document which matches with entered employeeId
-      const userDoc = await getDoc(doc(fireStoreDb, "Admins", localStorage.getItem("adminEmployeeId")));
+      const userDoc = await getDoc(doc(fireStoreDb, "Users", localStorage.getItem("adminEmployeeId")));
 
             if (userDoc.exists()) {
                 const userData = userDoc.data();

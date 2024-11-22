@@ -1,6 +1,6 @@
 
 
- .main-container {
+.main-container {
     position: relative; 
     width: 100vw;
     height: 100vh;
@@ -17,7 +17,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../../images/login-8.jpg');
+    background-image: url('../../images/login-bg.jpg');
     background-position: center; 
     background-repeat: no-repeat;
     background-size: cover;
@@ -33,15 +33,6 @@
     justify-content: center;
 }
 
-.form-container{
-    /* border:2px solid red; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap:15px;
-    margin-top: -15px;
-}
 
 .signup-heading {
     font-size: 40px;
