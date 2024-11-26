@@ -15,9 +15,8 @@ const Profile = () => {
   const [loggedAdminDetails, setLoggedAdminDetails] = useState();
   const [allUserDetails, setAllUsersDetails] = useState([])
   const useMyContextData = useMyContext();
-  // const { authorisedFieldValue } = useMyContextData;
+  const { authorisedFieldValue } = useMyContextData;
   const [isAdminValue, setIsAdminValue] = useState('');
-  const [authorisedFieldValue, setAuthorisedFieldValue] = useState("");
   const [editId, setEditId] = useState("");
 
   useEffect(() => {
@@ -104,70 +103,8 @@ const Profile = () => {
         <button onClick={handleLogout}>LogOut</button>
       </div>
 
-      <table className="table table-stripped">
-        <thead>
-          <tr>
-            <td>EmployeeId</td>
-            <td>Firstname</td>
-            <td>Lastname</td>
-            <td>Approval Status</td>
-            <td>MakeApproval</td>
-            <td>MakeAdmin</td>
-            <td>isAdmin</td>
-            <td>Update</td>
-          </tr>
-        </thead>
-        <tbody>
-          {allUserDetails.map((user) => (
-            <tr key={user.employeeId}>
-              <td>{user.employeeId}</td>
-              <td>{user.firstname}</td>
-              <td>{user.lastname}</td>
-              <td>
-                <Typography sx={{
-                  width: '50%', textAlign: 'center', padding: '12px', borderRadius: '12px', backgroundColor: (() => {
-                    switch (user.isAuthorisedField) {
-                      case 'pending': return 'lightblue';
-                      case 'approved': return 'lightgreen';
-                      case 'blocked': return 'lightred';
-                      default: return 'transparent'
-                    }
-                  })()
-                }}>
-                  {user.isAuthorisedField}</Typography>
-              </td>
-              <td>
-                <select disabled={!(editId === user.employeeId)} name="authorisedFieldValue" value={(authorisedFieldValue == "" && editId === user.employeeId) ? authorisedFieldValue : user.isAuthorisedField} onChange={e => setAuthorisedFieldValue(e.target.value)} className="form-control form-control-sm">
-                  <option value="">Choose Status</option>
-                  <option value={'approved'}>Approve</option>
-                  <option value={'blocked'}>Block</option>
-                </select>
 
-              </td>
-              <td>
-                <select
-                  disabled={!(editId === user.employeeId)}
-                  name="isAdmin"
-                  value={(isAdminValue == "" && editId === user.employeeId) ? isAdminValue : user.isAdmin} onChange={handleChange}
-                  className="form-control form-control-sm"
-                >
-                  <option value="">Choose Status</option>
-                  <option value={'true'}>true</option>
-                  <option value={'false'}>false</option>
-                </select>
-              </td>
-              <td>{user.isAdmin}</td>
-              <td>
-                <input type="checkbox" name="editId" onChange={e => setEditId(e.target.value)} value={user.employeeId} />
-              </td>
-              <td><Button variant="contained" onClick={() => { handleSubmit(user) }}>Submit</Button></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-
-      {/* <TableContainer component={Paper} sx={{ maxWidth: 1250 }}>
+      <TableContainer component={Paper} sx={{ maxWidth: 1250 }}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
@@ -188,7 +125,17 @@ const Profile = () => {
                 <TableCell>{user.employeeId}</TableCell>
                 <TableCell>{user.firstname}</TableCell>
                 <TableCell>{user.lastname}</TableCell>
-                <TableCell></TableCell>
+                <TableCell><Typography sx={{
+                  width: '50%', textAlign: 'center', padding: '12px', borderRadius: '12px', backgroundColor: (() => {
+                    switch (user.isAuthorisedField) {
+                      case 'pending': return 'lightblue';
+                      case 'approved': return 'lightgreen';
+                      case 'blocked': return 'lightred';
+                      default: return 'transparent'
+                    }
+                  })()
+                }}>
+                  {user.isAuthorisedField}</Typography></TableCell>
                 <TableCell><SelectComponent isAuthorisedField={user.isAuthorisedField} /></TableCell>
                 <TableCell>
                   <FormControl fullWidth variant="outlined">
@@ -210,17 +157,15 @@ const Profile = () => {
                 <TableCell>
                   <input type="checkbox" name="EditId" onChange={e => setEditId(e.target.value)} value={user.employeeId} />
                 </TableCell>
-                <TableCell></TableCell>
+                <TableCell><Button variant="contained" onClick={() => { handleSubmit(user) }}>Submit</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
 
     </div>
   )
 }
 
 export default Profile
-
-// 80004437, 123456
