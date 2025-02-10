@@ -16,35 +16,37 @@ const{employeeId ,setEmployeeId} = useMyContextData ;
   
   const navigate = useNavigate()
 
-  const handleLogin = async(e) => {
-     e.preventDefault()
-     localStorage.setItem("adminEmployeeId" , employeeId) // setting the employee id entered by user to localStorage named adminEmpyeeId
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    localStorage.setItem("adminEmployeeId", employeeId); // setting the employee id entered by user to localStorage
 
-     try{
+    try {
+        // getting the document which matches with entered employeeId
+        const userDoc = await getDoc(doc(fireStoreDb, "Users", localStorage.getItem("adminEmployeeId")));
 
-      //gettting the document which matches with entered employeeId
-      const userDoc = await getDoc(doc(fireStoreDb, "Users", localStorage.getItem("adminEmployeeId")));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const userPassword = userData.password; // Get the password associated with the employee ID
+            const isAdmin = userData.isAdmin; // Get the isAdmin field
 
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                const userPassword = userData.password; // Get the password associated with the employee ID
-
-                if(userPassword === password) {
-                  navigate('/profile');
+            if (userPassword === password) {
+                if (isAdmin === 'true') {
+                    navigate('/profile');
+                } else {
+                    alert('You do not have admin privileges.');
                 }
-                else{
-                  alert('you have entered wrong password')
-                }
-
             } else {
-                alert('No user found with this Employee ID');
+                alert('You have entered the wrong password');
             }
-     }
-     catch(err){
-      console.log(err.message)
-     }
 
-  }
+        } else {
+            alert('No user found with this Employee ID');
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+};
+
 
   return ( <>
 
